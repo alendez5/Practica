@@ -23,13 +23,30 @@ public class Sender {
 		int[] codigoHamming;
 		
 		
-		codigoHamming = introducirBitsDeDatos(mensaje, longitudTotal); // Primero introducimos los bits de datos del mensaje
+		codigoHamming = introducirBitsDeDatos(mensaje, longitudTotal); 
 	
 		
-		codigoHamming = introducirBitsDeRedundancia(codigoHamming); // luego se introducen los bits de redunancia
+		codigoHamming = introducirBitsDeRedundancia(codigoHamming); 
 		
 
-
+		int contador = 0;
+	
+		
+		for(int i = 1;  i < codigoHamming.length;i++) {
+			
+			if(codigoHamming[i] == 1)
+				contador++;
+			
+		}
+		
+		if(contador % 2 == 0) {       //Se introduce el bit de paridad global
+			codigoHamming[0] = 0;
+		}
+		else {
+			codigoHamming[0] = 1;
+		}
+		
+	
 		
 		
 	}
