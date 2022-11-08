@@ -4,7 +4,7 @@ public class Sender {
 	
 	public static void main(String args[]) {
 		
-		int[] mensaje = {0,1,1,0,1,1,0,1};
+		int[] mensaje = {1,1,1,1,1,1,1,1};
 
 		int bitsParidad = 0;
 		int formula =  bitsParidad + mensaje.length + 1;
@@ -20,6 +20,20 @@ public class Sender {
 			
 		}
 		
+		int[] codigoHamming = new int[formula];
+		int contador = 0;
+		
+		
+		for(int i = 1; i < codigoHamming.length;i++) {
+			
+			if(!esPotenciaDeDos(i)) {
+				
+				codigoHamming[i] = mensaje[contador];
+				contador++;
+				
+			}
+			
+		}
 		
 	
 		
