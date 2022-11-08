@@ -7,36 +7,29 @@ public class Sender {
 		int[] mensaje = {1,1,1,1,1,1,1,1};
 
 		int bitsParidad = 0;
-		int formula =  bitsParidad + mensaje.length + 1;
+		int longitudTotal =  bitsParidad + mensaje.length + 1;
 		double potencia = Math.pow(2, bitsParidad);
 		
-		while ( potencia < formula) {
+		while ( potencia < longitudTotal) {
 			
 			
 			bitsParidad++;
 			
-			formula =   bitsParidad + mensaje.length + 1;
+			longitudTotal =   bitsParidad + mensaje.length + 1;
 			potencia = Math.pow(2, bitsParidad);
 			
 		}
 		
-		int[] codigoHamming = new int[formula];
-		int contador = 0;
+		int[] codigoHamming;
 		
 		
-		for(int i = 1; i < codigoHamming.length;i++) {
-			
-			if(!esPotenciaDeDos(i)) {
-				
-				codigoHamming[i] = mensaje[contador];
-				contador++;
-				
-			}
-			
-		}
-		
+		codigoHamming = introducirBitsDeDatos(mensaje, longitudTotal); // Primero introducimos los bits de datos del mensaje
 	
 		
+		codigoHamming = introducirBitsDeRedundancia(codigoHamming); // luego se introducen los bits de redunancia
+		
+
+
 		
 		
 	}
@@ -67,6 +60,69 @@ public class Sender {
 		
 	}
 	
+	private static int[] introducirBitsDeDatos(int[] mensaje, int longitud) {
+		
+		int[] codigoHamming = new int[longitud];
+		
+		
+		int contador = 0;//Se usa solo para recorrer el array del mensaje
+		
+		
+		for(int i = 1; i < codigoHamming.length;i++) {
+			
+			if(!esPotenciaDeDos(i)) {
+				
+				codigoHamming[i] = mensaje[contador];
+				contador++;
+				
+			}
+			
+		}
+		
+		return codigoHamming;
+		
+	}
+	
+	
+	private static int[] introducirBitsDeRedundancia(int[] codigoHamming) {
+		
+		int sumaDeBits = 0; // Se usa solo para sumar los bits que corresponden a cada bit de redundancia
+		
+		
+		for (int i = 1; i < codigoHamming.length; i++) {
+
+			if (esPotenciaDeDos(i)) {
+				
+				for (int j = 1; j < codigoHamming.length; j++) {
+
+					if (j != i && !esPotenciaDeDos(j)) {
+
+						if ((j & i) != 0) {
+						
+							if (codigoHamming[j] == 1)
+								sumaDeBits++;
+
+						}
+
+					}
+
+				}
+
+				if (sumaDeBits % 2 != 0)
+					codigoHamming[i] = 1;
+				else
+					codigoHamming[i] = 0;
+				
+				
+				
+				sumaDeBits = 0; // Se resetea la suma
+			}
+
+		}
+		
+		return codigoHamming;
+		
+	}
 	
 	
 	
