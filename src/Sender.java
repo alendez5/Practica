@@ -5,13 +5,13 @@ public class Sender {
 	public static void main(String args[]) {
 		
 		int[] mensaje = {1,1,1,1,1,1,1,1};
-
+		int[] codigoHamming;
+		
 		int bitsParidad = 0;
 		int longitudTotal =  bitsParidad + mensaje.length + 1;
 		double potencia = Math.pow(2, bitsParidad);
 		
 		while ( potencia < longitudTotal) {
-			
 			
 			bitsParidad++;
 			
@@ -20,7 +20,7 @@ public class Sender {
 			
 		}
 		
-		int[] codigoHamming;
+		
 		
 		
 		codigoHamming = introducirBitsDeDatos(mensaje, longitudTotal); 
@@ -28,40 +28,27 @@ public class Sender {
 		
 		codigoHamming = introducirBitsDeRedundancia(codigoHamming); 
 		
-
-		int contador = 0;
-	
 		
-		for(int i = 1;  i < codigoHamming.length;i++) {
-			
-			if(codigoHamming[i] == 1)
-				contador++;
-			
-		}
-		
-		if(contador % 2 == 0) {       //Se introduce el bit de paridad global
-			codigoHamming[0] = 0;
-		}
-		else {
-			codigoHamming[0] = 1;
-		}
-		
-
+		codigoHamming = introducirBitGlobal(codigoHamming);
 		
 		
 		
-		for (int i = 0; i < codigoHamming.length; i++) {
+		
+		
+		for (int i = 0; i < codigoHamming.length; i++) { //Imprime bits
 			System.out.print(codigoHamming[i] + " ");
 		}
+		
 		System.out.println();
-		for (int i = 0; i < codigoHamming.length; i++) {
+		
+		for (int i = 0; i < codigoHamming.length; i++) { // Imprime posiciones
 			System.out.print(i + " ");
 		
 		}
 		
 		
-		
 		System.out.println();
+		
 		Receiver receiver = new Receiver(codigoHamming);
 		int posicion = receiver.buscarUnSoloError();
 		
@@ -164,5 +151,28 @@ public class Sender {
 	}
 	
 	
+	private static int[] introducirBitGlobal(int[] codigoHamming) {
+		
+		
+		int contador = 0;
 	
+		
+		for(int i = 1;  i < codigoHamming.length;i++) {
+			
+			if(codigoHamming[i] == 1)
+				contador++;
+			
+		}
+		
+		if(contador % 2 == 0) {       //Se introduce el bit de paridad global
+			codigoHamming[0] = 0;
+		}
+		else {
+			codigoHamming[0] = 1;
+		}
+		
+		
+		return codigoHamming;
+		
+	}
 }
