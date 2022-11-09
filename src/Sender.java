@@ -46,7 +46,17 @@ public class Sender {
 			codigoHamming[0] = 1;
 		}
 		
+
 	
+		
+		for (int i = 0; i < codigoHamming.length; i++) {
+			System.out.print(codigoHamming[i] + " ");
+		}
+		System.out.println();
+		for (int i = 0; i < codigoHamming.length; i++) {
+			System.out.print(i + " ");
+		
+		}
 		
 		
 	}
@@ -96,6 +106,8 @@ public class Sender {
 			
 		}
 		
+
+
 		return codigoHamming;
 		
 	}
@@ -106,17 +118,18 @@ public class Sender {
 		int sumaDeBits = 0; // Se usa solo para sumar los bits que corresponden a cada bit de redundancia
 		
 		
-		for (int i = 1; i < codigoHamming.length; i++) {
+		for (int posBitRedundancia = 1; posBitRedundancia < codigoHamming.length; posBitRedundancia++) {
 
-			if (esPotenciaDeDos(i)) {
+			if (esPotenciaDeDos(posBitRedundancia)) {
 				
-				for (int j = 1; j < codigoHamming.length; j++) {
+				for (int posBitMensaje = 1; posBitMensaje < codigoHamming.length; posBitMensaje++) {
 
-					if (j != i && !esPotenciaDeDos(j)) {
-
-						if ((j & i) != 0) {
+					
+					if (posBitMensaje != posBitRedundancia && !esPotenciaDeDos(posBitMensaje)) {
 						
-							if (codigoHamming[j] == 1)
+						if ((posBitMensaje & posBitRedundancia) != 0) {
+							
+							if (codigoHamming[posBitMensaje] == 1)
 								sumaDeBits++;
 
 						}
@@ -126,9 +139,9 @@ public class Sender {
 				}
 
 				if (sumaDeBits % 2 != 0)
-					codigoHamming[i] = 1;
+					codigoHamming[posBitRedundancia] = 1;
 				else
-					codigoHamming[i] = 0;
+					codigoHamming[posBitRedundancia] = 0;
 				
 				
 				
