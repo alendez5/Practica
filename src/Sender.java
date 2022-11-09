@@ -47,7 +47,8 @@ public class Sender {
 		}
 		
 
-	
+		
+		
 		
 		for (int i = 0; i < codigoHamming.length; i++) {
 			System.out.print(codigoHamming[i] + " ");
@@ -57,6 +58,14 @@ public class Sender {
 			System.out.print(i + " ");
 		
 		}
+		
+		
+		
+		System.out.println();
+		Receiver receiver = new Receiver(codigoHamming);
+		int posicion = receiver.buscarUnSoloError();
+		
+		System.out.println(posicion);
 		
 		
 	}
