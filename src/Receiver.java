@@ -11,7 +11,20 @@ public class Receiver {
 
 	
 
-	public int buscarUnSoloError() {
+	public void buscarErrores() {
+		
+		int unError = buscarUnSoloError();
+		
+		if(buscarDosErrores())
+			System.out.println("Existen 2 errores en el codigo");
+		else if(!buscarDosErrores() && unError != 0)
+			System.out.println("Existe un error en la posicion " + unError);
+		else
+			System.out.println("No existen errores en el codigo");
+		
+	}
+	
+	private int buscarUnSoloError() {
 		
 		
 		int contadorDeBits = 0;
@@ -56,7 +69,7 @@ public class Receiver {
 		
 	}
 
-	public boolean buscarDosErrores() {
+	private boolean buscarDosErrores() {
 		
 		boolean dosErrores = false;
 		
@@ -73,7 +86,7 @@ public class Receiver {
 		return dosErrores;
 	}
 	
-	public  boolean comprobarBitGlobal() {
+	private  boolean comprobarBitGlobal() {
 
 		int contador = 0;
 		boolean esCorrecto = false;

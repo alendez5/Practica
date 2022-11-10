@@ -30,6 +30,7 @@ public class Sender {
 		
 		codigoHamming = introducirBitGlobal(codigoHamming);
 	
+	
 		
 		auxImprimirCodigo(codigoHamming); // Funcion auxiliar temporal para imprimir codigo
 	
@@ -39,13 +40,7 @@ public class Sender {
 		
 		Receiver receiver = new Receiver(codigoHamming);
 		
-		int posicion = receiver.buscarUnSoloError();
-		
-		System.out.println(posicion);
-		
-		if(receiver.buscarDosErrores())
-			System.out.println("Hay 2 errores");
-		
+		receiver.buscarErrores();
 		
 	}
 	
