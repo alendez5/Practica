@@ -5,13 +5,13 @@ public class Sender {
 	public static void main(String args[]) {
 		
 		int[] mensaje = {1,1,1,1,1,1,1,1};
-
+		int[] codigoHamming;
+		
 		int bitsParidad = 0;
 		int longitudTotal =  bitsParidad + mensaje.length + 1;
 		double potencia = Math.pow(2, bitsParidad);
 		
 		while ( potencia < longitudTotal) {
-			
 			
 			bitsParidad++;
 			
@@ -19,8 +19,7 @@ public class Sender {
 			potencia = Math.pow(2, bitsParidad);
 			
 		}
-		
-		int[] codigoHamming;
+
 		
 		
 		codigoHamming = introducirBitsDeDatos(mensaje, longitudTotal); 
@@ -28,26 +27,20 @@ public class Sender {
 		
 		codigoHamming = introducirBitsDeRedundancia(codigoHamming); 
 		
-
-		int contador = 0;
+		
+		codigoHamming = introducirBitGlobal(codigoHamming);
+	
 	
 		
-		for(int i = 1;  i < codigoHamming.length;i++) {
-			
-			if(codigoHamming[i] == 1)
-				contador++;
-			
-		}
-		
-		if(contador % 2 == 0) {       //Se introduce el bit de paridad global
-			codigoHamming[0] = 0;
-		}
-		else {
-			codigoHamming[0] = 1;
-		}
-		
+		auxImprimirCodigo(codigoHamming); // Funcion auxiliar temporal para imprimir codigo
 	
 		
+		
+		System.out.println();
+		
+		Receiver receiver = new Receiver(codigoHamming);
+		
+		receiver.buscarErrores();
 		
 	}
 	
@@ -96,6 +89,8 @@ public class Sender {
 			
 		}
 		
+
+
 		return codigoHamming;
 		
 	}
@@ -106,17 +101,18 @@ public class Sender {
 		int sumaDeBits = 0; // Se usa solo para sumar los bits que corresponden a cada bit de redundancia
 		
 		
-		for (int i = 1; i < codigoHamming.length; i++) {
+		for (int posBitRedundancia = 1; posBitRedundancia < codigoHamming.length; posBitRedundancia++) {
 
-			if (esPotenciaDeDos(i)) {
+			if (esPotenciaDeDos(posBitRedundancia)) {
 				
-				for (int j = 1; j < codigoHamming.length; j++) {
+				for (int posBitMensaje = 1; posBitMensaje < codigoHamming.length; posBitMensaje++) {
 
-					if (j != i && !esPotenciaDeDos(j)) {
-
-						if ((j & i) != 0) {
+					
+					if (posBitMensaje != posBitRedundancia && !esPotenciaDeDos(posBitMensaje)) {
 						
-							if (codigoHamming[j] == 1)
+						if ((posBitMensaje & posBitRedundancia) != 0) {
+							
+							if (codigoHamming[posBitMensaje] == 1)
 								sumaDeBits++;
 
 						}
@@ -126,9 +122,9 @@ public class Sender {
 				}
 
 				if (sumaDeBits % 2 != 0)
-					codigoHamming[i] = 1;
+					codigoHamming[posBitRedundancia] = 1;
 				else
-					codigoHamming[i] = 0;
+					codigoHamming[posBitRedundancia] = 0;
 				
 				
 				
@@ -142,5 +138,44 @@ public class Sender {
 	}
 	
 	
+	private static int[] introducirBitGlobal(int[] codigoHamming) {
+		
+		
+		int contador = 0;
+	
+		
+		for(int i = 1;  i < codigoHamming.length;i++) {
+			
+			if(codigoHamming[i] == 1)
+				contador++;
+			
+		}
+		
+		if(contador % 2 == 0) {       //Se introduce el bit de paridad global
+			codigoHamming[0] = 0;
+		}
+		else {
+			codigoHamming[0] = 1;
+		}
+		
+		
+		
+		return codigoHamming;
+		
+	}
+	
+	private static void auxImprimirCodigo(int[] codigoHamming) {
+		 
+		for (int i = 0; i < codigoHamming.length; i++) { //Imprime bits
+			System.out.print(codigoHamming[i] + " ");
+		}
+		
+		System.out.println();
+		
+		for (int i = 0; i < codigoHamming.length; i++) { // Imprime posiciones
+			System.out.print(i + " ");
+		
+		}
+	}
 	
 }
