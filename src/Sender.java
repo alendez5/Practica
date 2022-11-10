@@ -19,8 +19,7 @@ public class Sender {
 			potencia = Math.pow(2, bitsParidad);
 			
 		}
-		
-		
+
 		
 		
 		codigoHamming = introducirBitsDeDatos(mensaje, longitudTotal); 
@@ -30,29 +29,22 @@ public class Sender {
 		
 		
 		codigoHamming = introducirBitGlobal(codigoHamming);
+	
 		
-		
-		
-		
-		
-		for (int i = 0; i < codigoHamming.length; i++) { //Imprime bits
-			System.out.print(codigoHamming[i] + " ");
-		}
-		
-		System.out.println();
-		
-		for (int i = 0; i < codigoHamming.length; i++) { // Imprime posiciones
-			System.out.print(i + " ");
-		
-		}
+		auxImprimirCodigo(codigoHamming); // Funcion auxiliar temporal para imprimir codigo
+	
 		
 		
 		System.out.println();
 		
 		Receiver receiver = new Receiver(codigoHamming);
+		
 		int posicion = receiver.buscarUnSoloError();
 		
 		System.out.println(posicion);
+		
+		if(receiver.buscarDosErrores())
+			System.out.println("Hay 2 errores");
 		
 		
 	}
@@ -172,7 +164,23 @@ public class Sender {
 		}
 		
 		
+		
 		return codigoHamming;
 		
 	}
+	
+	private static void auxImprimirCodigo(int[] codigoHamming) {
+		 
+		for (int i = 0; i < codigoHamming.length; i++) { //Imprime bits
+			System.out.print(codigoHamming[i] + " ");
+		}
+		
+		System.out.println();
+		
+		for (int i = 0; i < codigoHamming.length; i++) { // Imprime posiciones
+			System.out.print(i + " ");
+		
+		}
+	}
+	
 }

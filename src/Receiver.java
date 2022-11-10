@@ -55,6 +55,46 @@ public class Receiver {
 		return sumaDePosiciones;
 		
 	}
+
+	public boolean buscarDosErrores() {
+		
+		boolean dosErrores = false;
+		
+		if(buscarUnSoloError() != 0) {
+			
+				if(comprobarBitGlobal()) {
+					
+					dosErrores = true;
+					
+				}
+			
+		}
+			
+		return dosErrores;
+	}
+	
+	public  boolean comprobarBitGlobal() {
+
+		int contador = 0;
+		boolean esCorrecto = false;
+		
+		for (int i = 1; i < codigoHamming.length; i++) {
+
+			if (codigoHamming[i] == 1)
+				contador++;
+
+		}
+
+		if (contador % 2 == 0 && codigoHamming[0] == 0) {
+			esCorrecto = true;
+		} 													
+		else if(contador % 2 != 0 && codigoHamming[0] == 1) {
+			esCorrecto = true;
+		}
+
+		return esCorrecto;
+
+	}
 	
 	private  boolean esPotenciaDeDos(int posicion) {
 		
