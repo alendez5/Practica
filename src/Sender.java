@@ -1,11 +1,20 @@
 
 public class Sender {
 
+	private int[] codigoHamming;
+	private int[] mensaje;
 	
-	public static void main(String args[]) {
+	public Sender(int[] mensaje) {
 		
-		int[] mensaje = {1,1,1,1,1,1,1,1};
-		int[] codigoHamming;
+		this.mensaje = mensaje;
+		
+
+		crearCodHamming();
+		
+	}
+	
+	
+	private void crearCodHamming() {
 		
 		int bitsParidad = 0;
 		int longitudTotal =  bitsParidad + mensaje.length + 1;
@@ -18,31 +27,22 @@ public class Sender {
 			longitudTotal =   bitsParidad + mensaje.length + 1;
 			potencia = Math.pow(2, bitsParidad);
 			
-		}
-
+		} // El objetivo del while solo es calcular la longitud total del codigoHamming
 		
 		
-		codigoHamming = introducirBitsDeDatos(mensaje, longitudTotal); 
+		codigoHamming = new int[longitudTotal];
+		
+		introducirBitsDeDatos(); 
 	
 		
-		codigoHamming = introducirBitsDeRedundancia(codigoHamming); 
+		introducirBitsDeRedundancia(); 
 		
 		
-		codigoHamming = introducirBitGlobal(codigoHamming);
+		introducirBitGlobal();
 	
-	
-		
-		auxImprimirCodigo(codigoHamming); // Funcion auxiliar temporal para imprimir codigo
-	
-		
-		
-		System.out.println();
-		
-		Receiver receiver = new Receiver(codigoHamming);
-		
-		receiver.buscarErrores();
 		
 	}
+
 	
 	private static boolean esPotenciaDeDos(int posicion) {
 		
@@ -70,9 +70,8 @@ public class Sender {
 		
 	}
 	
-	private static int[] introducirBitsDeDatos(int[] mensaje, int longitud) {
+	private void introducirBitsDeDatos() {
 		
-		int[] codigoHamming = new int[longitud];
 		
 		
 		int contador = 0;//Se usa solo para recorrer el array del mensaje
@@ -89,14 +88,11 @@ public class Sender {
 			
 		}
 		
-
-
-		return codigoHamming;
 		
 	}
 	
 	
-	private static int[] introducirBitsDeRedundancia(int[] codigoHamming) {
+	private void introducirBitsDeRedundancia() {
 		
 		int sumaDeBits = 0; // Se usa solo para sumar los bits que corresponden a cada bit de redundancia
 		
@@ -133,12 +129,11 @@ public class Sender {
 
 		}
 		
-		return codigoHamming;
 		
 	}
 	
 	
-	private static int[] introducirBitGlobal(int[] codigoHamming) {
+	private void introducirBitGlobal() {
 		
 		
 		int contador = 0;
@@ -158,24 +153,12 @@ public class Sender {
 			codigoHamming[0] = 1;
 		}
 		
-		
-		
-		return codigoHamming;
+
 		
 	}
 	
-	private static void auxImprimirCodigo(int[] codigoHamming) {
-		 
-		for (int i = 0; i < codigoHamming.length; i++) { //Imprime bits
-			System.out.print(codigoHamming[i] + " ");
-		}
-		
-		System.out.println();
-		
-		for (int i = 0; i < codigoHamming.length; i++) { // Imprime posiciones
-			System.out.print(i + " ");
-		
-		}
+	public int[] getCodigoHamming() {
+		return codigoHamming;
 	}
 	
 }
