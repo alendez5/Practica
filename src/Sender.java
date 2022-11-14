@@ -31,8 +31,10 @@ public class Sender {
 		codigoHamming = introducirBitGlobal(codigoHamming);
 	
 	
+		Noise noise = new Noise(codigoHamming);
 		
-		auxImprimirCodigo(codigoHamming); // Funcion auxiliar temporal para imprimir codigo
+
+		auxImprimirCodigo(noise.getCodigoHamming()); // Funcion auxiliar temporal para imprimir codigo
 	
 		
 		
