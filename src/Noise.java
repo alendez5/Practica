@@ -2,14 +2,15 @@
 public class Noise {
 	
 	private int[] codigoHamming;
+	private int numeroModificaciones;
 	
 	public Noise(int[] codigoHamming) {
 		
 		this.codigoHamming = codigoHamming;
 		
+		numeroModificaciones = alterarCodigo();
 		
-		
-		System.out.println(" Hay " + alterarCodigo() + " modificaciones");
+	
 		
 	}
 
@@ -44,7 +45,12 @@ public class Noise {
 	} 
 
 	
-	public int[] getCodigoHamming() {
+	public int[] getCodigoHammingModificado() {
 		return codigoHamming;
+	}
+	
+	public void mostrarModificaciones() {
+		System.out.println("Se han realizado " + numeroModificaciones + " modificaciones");
+		
 	}
 }

@@ -3,7 +3,7 @@ import java.util.Random;
 public class Generator {
 	
 	private int[] mensaje;
-	private final int LONGITUD = 8;
+	private final int LONGITUD_MENSAJE = 10;
 	
 	public Generator() {
 		
@@ -14,13 +14,13 @@ public class Generator {
 	private void crearMensaje() {
 		
 		   Random random= new Random();
-	       int N = 10;
+	  
 	       int randomNumber;
 	       int max = 1, min = 0;
 	          
-	       mensaje = new int[LONGITUD];
+	       mensaje = new int[LONGITUD_MENSAJE];
 	       
-	       for(int i = 0; i < N;i++){
+	       for(int i = 0; i < LONGITUD_MENSAJE ;i++){
 	              
 	                       
 	    	   	randomNumber = random.nextInt((max - min) + 1) + min;

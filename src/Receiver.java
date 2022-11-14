@@ -15,6 +15,9 @@ public class Receiver {
 		
 		int unError = buscarUnSoloError();
 		
+		
+		System.out.println();
+		
 		if(buscarDosErrores())
 			System.out.println("Existen 2 errores en el codigo");
 		else if(!buscarDosErrores() && unError != 0)
